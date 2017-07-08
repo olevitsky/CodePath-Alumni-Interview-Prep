@@ -1,0 +1,36 @@
+#include <iostream>
+vector<vector<int> > Solution::prettyPrint(int A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+ vector <vector <int> > output;
+ int dim = 2*A-1;
+ 
+ for (int x = 0; x < A; x++) 
+ {
+     vector <int> *row = new  (vector <int>);
+     for (int y = 0 ; y < dim ; y++)
+     {
+         row->push_back(A);
+     }
+     output.push_back(*row);
+ }
+ for (int x = 1; x < A; x++) 
+ {
+     for (int y = x ; y < A ; y++)
+     {
+         for (int z = x ; z < dim -x; z++)
+         {
+            int newval =   (output[y][z])-1; 
+            output[y][z] = newval;
+         }
+     }
+ }
+ for (int i = dim/2-1, j = dim/2+1 ; i >=0 ; i--, j++)
+ {
+     output.push_back(output[i]);
+ }
+ return output;
+}
+

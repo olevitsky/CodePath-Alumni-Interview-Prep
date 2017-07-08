@@ -1,0 +1,45 @@
+void find_perm(vector<vector<int>> &result , vector<int> last_perm) {
+    int k = -1;
+    int l = -1;
+    vector<int> cur_perm = last_perm;
+    for(int i = 0; i < last_perm.size() - 1 ; i++) {
+        if(last_perm[i] < last_perm[i+1]) {
+            k = i;
+        }
+    }
+    if (k == -1) return;
+    for (int i = k+1; i < last_perm.size() ; i++) {
+        if(last_perm[i] > last_perm[k]) {
+            l = i;
+        }
+    }
+    cur_perm[k] = last_perm[l];
+    cur_perm[l] = last_perm[k];
+    
+    //result.push_back(last_perm);
+    //result.push_back(cur_perm);
+    //return;
+    
+    int j = 1;
+    vector <int> step1_vector = cur_perm;
+    for(int i = last_perm.size() -1; i > k ; i--) {
+        cur_perm[k+j] = step1_vector[i];
+        j++;
+    }
+    result.push_back(cur_perm);
+    //return;
+    find_perm(result, cur_perm);
+}
+vector<vector<int> > Solution::permute(vector<int> &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    vector<vector<int>> return_vector;
+    vector <int> vec = A; 
+    std::sort(vec.begin(), vec.end());
+    return_vector.push_back(vec);
+    find_perm(return_vector, vec);
+    return return_vector;
+}
+

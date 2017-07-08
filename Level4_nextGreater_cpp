@@ -1,0 +1,30 @@
+vector<int> Solution::nextGreater(vector<int> &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    vector <int> return_value;
+    for(int i = 0; i < A.size(); i++)
+    {
+        int cur_val = A[i];
+        //return_value.push_back(A[i]);
+        //return return_value;
+        bool success  = false;
+        for(int j = i+1 ; j < A.size() ; j++ )
+        {
+            //return_value.push_back(j);
+            //return_value.push_back(cur_val);
+            if (A[j] > cur_val)
+            {
+                return_value.push_back(A[j]);
+                success = true;
+                break;
+            }
+        }
+        if(success == false) {
+            return_value.push_back (-1);
+        }
+    }
+    return return_value;
+}
+

@@ -1,0 +1,30 @@
+int Solution::kthsmallest(const vector<int> &A, int k) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    using Iter = std::vector<int>::const_iterator;
+    int size = A.size();
+    for (Iter it1 = A.begin(); it1 != A.end(); it1++)
+    {
+        int val = *it1;
+        int count_less = 0;
+        int count_equal = 0;
+        for (Iter it2 = A.begin(); it2 != A.end(); it2++)
+        {
+            int check_val = *it2;
+            if (check_val < val)
+            {
+                count_less++;
+                if(count_less > (k-1)) break;
+            } else if (check_val == val) {
+                count_equal++;
+            }
+        }
+        if( ((count_less == 0) ||(count_less < k)) && ((count_less + count_equal) >=k) ) {
+            return val;
+        }
+    }
+    return 0;
+}
+

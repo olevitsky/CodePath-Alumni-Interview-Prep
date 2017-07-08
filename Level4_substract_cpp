@@ -1,0 +1,70 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ 
+ int listSize (ListNode* A) {
+     int size = 0;
+     ListNode* n = A;
+     while (n!=NULL)
+     {
+         size++;
+         n = n->next;
+     }
+     return size;
+ }
+ 
+ ListNode* listCopy(ListNode* A) {
+     ListNode* returnList = NULL;
+     ListNode* clist;
+     if(A!=NULL) {
+         returnList = new ListNode(A->val);
+         clist = returnList;
+     } else {
+         return NULL;
+     }
+     ListNode* itList = A->next;
+     while(itList != NULL) {
+         clist->next = new ListNode(itList->val);
+         clist  = clist->next;
+         itList = itList->next;
+     }
+     return returnList;
+ }
+ 
+ListNode* Solution::subtract(ListNode* A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    int size = listSize(A);
+    int adj_size = size/2;
+    ListNode* return_list = listCopy(A);
+    ListNode* second_half = A;
+    for(int i = 0; i < adj_size ; i++) {
+        second_half = second_half->next;
+    }
+    ListNode* first_element = return_list;
+    for (int i = 0; i < adj_size; i++)
+    {
+        int count = size -i - adj_size;
+        ListNode* second_element = second_half;
+       // second_half->val = count;
+       // return second_element;
+        for(int j = 1 ; j < count ; j++) {
+            second_element = second_element->next;
+        }
+        //return second_element;
+        first_element->val = second_element->val - first_element->val;
+        first_element  = first_element->next;
+        
+    }
+    //return second_half;
+    return return_list;
+    
+}
+
