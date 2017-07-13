@@ -1,0 +1,49 @@
+vector<int> Solution::plusOne(vector<int> &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    vector <int> result;
+    vector <int> reverse_result;
+    // get rid of leading 0
+    vector <int> B;
+    bool leading_zero = A.size() == 1?  false : true;
+    for (auto it = A.begin(); it != A.end() ; it++) {
+        if(leading_zero && *it ==0  ) {
+            continue;
+        } else {
+            leading_zero = false;
+            B.push_back(*it);
+        }
+    }
+    if(B.size() == 0 ) {
+        B.push_back(A[A.size() -1 ]);
+    }
+    int count = 0;
+    for(auto rit = B.rbegin() ; rit !=B.rend() ; rit++ ) {
+        if(*rit ==9) {
+           reverse_result.push_back(0);
+           count++;
+           if(count == B.size() && *rit == 9 ) {
+               reverse_result.push_back(1);
+               count ++;
+           }
+        } else {
+            reverse_result.push_back(1 + *rit);
+            count++;
+            break;
+        }
+    }
+   
+    if(count <= B.size()) {
+       for(int i = 0; i < B.size() -count;  i++ ) {
+            result.push_back(B[i]) ;
+        }
+    }
+    for(int i = reverse_result.size() -1 ; i>=0 ; i--) {
+        result.push_back(reverse_result[i]);
+    }
+    return result;
+    
+}
+

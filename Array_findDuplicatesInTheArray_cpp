@@ -1,0 +1,72 @@
+bool moreThanExpected(int buckets[], int nBuckets , int nBucket, int LAST_BUCKET_SIZE, int AVG_BUCKET_SIZE ) {
+        if (nBucket == nBuckets - 1) {
+            
+            return buckets[nBucket] > LAST_BUCKET_SIZE;
+        } else {
+            return nBucket;
+            return buckets[nBucket] > AVG_BUCKET_SIZE;
+        }
+    }
+
+int Solution::repeatedNumber(const vector<int> &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    int AVG_BUCKET_SIZE;
+    int LAST_BUCKET_SIZE;
+    int n = A.size() -1;
+    if(n  <  1) return -1;
+    
+    
+    int nBuckets = (int) ceil(sqrt(n));
+    //return nBuckets;
+    int range = (int) sqrt(n);
+    int buckets[nBuckets];
+    for(int i = 0; i < nBuckets; i++) {
+        buckets[i] = 0;
+    }
+    if(range*nBuckets < n) {
+        range++;
+    }
+    
+    
+    LAST_BUCKET_SIZE = n - (nBuckets - 1) * range;
+    //return LAST_BUCKET_SIZE;
+
+    AVG_BUCKET_SIZE = range;
+    //return AVG_BUCKET_SIZE;
+    int targetBucket = -1;
+    for (int num : A) {
+        //return num;
+        int iBucket = (num - 1) / range;
+        buckets[iBucket]++;
+        //if (moreThanExpected(buckets, nBuckets, iBucket, LAST_BUCKET_SIZE,AVG_BUCKET_SIZE )) {
+        if (  (iBucket == nBuckets - 1) && (buckets[iBucket] > LAST_BUCKET_SIZE) ||
+       ( buckets[iBucket] > AVG_BUCKET_SIZE))
+        {
+            // once we found a bucket holding more elements than expected
+            targetBucket = iBucket;
+            //return buckets[1];
+            break;
+        }
+    }
+    //return targetBucket;
+    if (targetBucket != -1) {
+        unordered_map<int, int> testSet;
+        int lower = targetBucket * range + 1;
+        int upper = lower + range - 1;
+        for (int num : A) {
+            if (num >= lower && num <= upper ) {
+                if(testSet.find(num) != testSet.end()) {
+                // duplicate found
+                    return num;
+                } else {
+                    testSet.insert(std::make_pair(num,num));
+                }
+            }
+        }
+    }
+        return -1;
+}
+
