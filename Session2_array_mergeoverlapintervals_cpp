@@ -1,0 +1,76 @@
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+bool isOverlap (Interval a, Interval b) {
+    if(((a.start >= b.start && a.start <= b.end) ||
+        (a.end <= b.end && a.end >= b.start)) ||
+        ((b.start >= a.start && b.start <= a.end) ||
+        (b.end <= a.end && b.end >= a.start)))  {
+            return true;
+        }
+        return false;
+}
+
+Interval mergeIntevals (Interval &a, Interval &b) {
+    Interval il(min(a.start, b.start), max(a.end,b.end));
+    return il;
+}
+
+bool sortInterval (Interval a , Interval b) {
+    if(a.start < b.start) return true;
+    return false;
+}
+vector<Interval> Solution::merge(vector<Interval> &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    vector<Interval> B = A;
+    std::sort(B.begin(),  B.end(), sortInterval);
+    vector <Interval> result;
+    std::vector<Interval>::iterator it = B.begin();
+    int startId = (*it).start;
+    int endId = (*it).end;
+    for(it++; it != B.end() ; ++it) {
+        if((*it).start <= endId) {
+            endId = max(endId, (*it).end);
+        } else {
+            Interval l(startId, endId);
+            startId = (*it).start;
+            endId = (*it).end;
+            result.push_back(l);
+        }
+    }
+    Interval l(startId, endId);
+    result.push_back(l);
+   /* while(it != B.end()) {
+        auto nextIt = it+1;
+        if(nextIt == B.end()) {
+            //Interval cur_int(startId, endId);
+            //result.push_back(cur_int);
+            it++;
+        } else {
+            if((*it).end >= (*nextIt).start) {
+               endId = max(endId, (*nextIt).end);
+                it = nextIt+1;
+            } else {
+                Interval cur_int(startId, endId); 
+                result.push_back(cur_int);
+                startId = (*nextIt).start;
+                endId = (*nextIt).end;
+                it++;
+            }
+        }
+        //it++;
+    }
+    Interval cur_int(startId, endId); 
+    result.push_back(cur_int);*/
+    return result;
+}
+

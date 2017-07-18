@@ -1,0 +1,78 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ListNode* Solution::addTwoNumbers(ListNode* A, ListNode* B) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    int carryOver = 0;
+    ListNode* lastNotNil;
+    ListNode *l1 , *l2;
+    ListNode* result = NULL;
+    ListNode* curptr = result;
+    int sum;
+    for(l1 = A, l2 = B; l1 != NULL && l2 != NULL; l1 = l1->next, l2 = l2->next ) {
+       sum = l1->val + l2->val + carryOver;
+       if(sum >=10) {
+           sum -=10;
+           carryOver = 1;
+       } else {
+           carryOver = 0;
+       }
+       ListNode *ln = new ListNode(sum);
+       if(result == NULL) {
+           result = ln;
+           curptr = ln;
+           lastNotNil = ln;
+       } else {
+           curptr->next = ln;
+           curptr = ln; 
+       }
+       
+       if(sum ) {
+           lastNotNil = curptr;
+       }
+        
+    }
+    ListNode* fl = l1? l1 :l2;
+    
+    for(; fl != NULL; fl = fl->next) {
+        sum = fl->val + carryOver;
+        if(sum >=10) {
+            sum -=10;
+           carryOver = 1;
+        } else {
+            carryOver = 0;
+        }
+        ListNode *ln = new ListNode(sum);
+       if(result == NULL) {
+           result = ln;
+           curptr = ln;
+           lastNotNil = ln;
+       } else {
+           curptr->next = ln;
+           curptr = ln; 
+       }
+       
+       if(sum ) {
+           lastNotNil = curptr;
+       }
+       
+    }
+    
+   if(carryOver) {
+       ListNode *ln = new ListNode(carryOver);
+       curptr->next = ln;
+   } else if(lastNotNil) {
+        lastNotNil->next = NULL;
+   }
+    return result;
+    
+}
+

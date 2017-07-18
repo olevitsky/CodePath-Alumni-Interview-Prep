@@ -1,0 +1,70 @@
+int Solution::atoi(const string &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    bool is_negative = false;
+    if(A.length() ==0) return 0;
+    string B;
+    bool first_digit = false;
+    for(int i = 0; i < A.length() ; i++) {
+        if(A[i] == ' ' && !first_digit) { 
+            continue;
+        } else if(A[i] == '-' && !first_digit) {
+            is_negative = true;
+            first_digit = true;
+        } else if(A[i] == '+' && !first_digit) {
+            first_digit = true;
+        } else if (isdigit(A[i]) ) {
+            first_digit = true;
+            B.push_back(A[i]);
+        } else {
+            break;
+        }
+    }
+    if(B.length() == 0) {
+        return 0;
+    }
+    if(B.length() > 10 || (B.length() == 10 && B[0] > 2)) {
+        if(is_negative) {
+            return INT_MIN;
+        }
+        return INT_MAX;
+    }
+    reverse(B.begin(),  B.end());
+    int p10 = 1;
+    int delta;
+   // return B.length();
+   int ret_val = 0;
+   string digits = "0123456789";
+   unordered_map <char, int> c2d;
+   for(int i = 0 ; i <=10 ; i++) {
+       c2d[digits[i]] = i;
+   }
+    for(int i = 0 ; i < B.length() ; i++) {
+        if(i!=0) {
+            p10 = p10*10;
+        }
+        if( i!= 10 || (i== 10 && B[i] != '2')) {
+            ret_val += c2d[B[i]]* p10;
+        } else {
+            delta = INT_MAX - B[i];
+            if(is_negative) {
+                if(delta > 147483648) {
+                    return INT_MIN;
+                } else {
+                    ret_val += c2d[B[i]]* p10;
+                }
+            } else {
+                if(delta > 147483647) {
+                    return INT_MAX;
+                } else {
+                    ret_val += c2d[B[i]]* p10;
+                }
+            }
+        }
+    }
+    
+    return is_negative? -ret_val: ret_val;
+}
+

@@ -1,0 +1,27 @@
+int Solution::strStr(const string &haystack, const string &needle) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    if(needle.length() == 0) return -1;
+    if(haystack.length() == 0 ) return -1;
+    int i, j;
+    int return_val = -1;
+    int hay_val = 0;
+    for( i = 0, j = 0; j < needle.length() && i < haystack.length(); i++, j++) {
+        if(haystack[i] == needle[j]) {
+            if(return_val == -1) return_val = i;
+        } else {
+            j = -1;
+            i = hay_val;
+            hay_val++;
+            return_val = -1;
+            //if(i!=0 && i != 1) {  return i; }//return haystack[i] == needle[j] ? 20 : 30; }
+        }
+    }
+    if(j == needle.length()) {
+        return return_val;
+    }
+    return -1;
+}
+

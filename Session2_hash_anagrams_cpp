@@ -1,0 +1,31 @@
+vector<vector<int> > Solution::anagrams(const vector<string> &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    vector <string> B;
+    for (auto s : A) {
+        sort(s.begin(), s.end()) ;
+        B.push_back(s);
+    }
+    unordered_map<std::string, vector<int>  > mp;
+    for(int i = 0; i < B.size(); i++) {
+        if (mp.find(B[i]) == mp.end()) {
+            vector<int> val;
+            val.push_back(i+1);
+            string s = B[i];
+            mp[s] =  val;
+        } else {
+            vector<int> val = mp[B[i]];
+            //mp.erase(B[i]);
+            val.push_back(i+1);
+            mp[B[i]] = val;
+        }
+    }
+    vector <vector<int>> ret_val;
+    for (auto it : mp) {
+        ret_val.push_back((it).second);
+    }
+    return ret_val;
+}
+

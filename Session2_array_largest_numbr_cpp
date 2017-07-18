@@ -1,0 +1,79 @@
+bool my_sort (int i , int j) {
+    string si = to_string(i);
+     string sj = to_string(j);
+    int li = si.length();
+    int lj = sj.length();
+    int tl = li + lj;
+    char ci;
+    char cj;
+    for (int i = 0; i < tl ; i++) {
+        
+        if(i < li){
+            ci = si[i];
+        } else {
+            ci = sj[i-li];
+        }
+        if (i < lj) {
+            cj = sj[i];
+        }  else {
+            cj = si[i - lj];
+        }
+        if (ci > cj) {
+            return true;
+        } else if (ci < cj) {
+            return false;   
+        }
+    }
+    /*int ln = min(si.length(), sj.length());
+    int k;
+    for(k = 0; k < ln ; k++) {
+        if (si[k] > sj[k]) {
+            return true;
+        } else if(si[k] <  sj[k]) {
+            return false;
+        }
+    }
+    if(si.length() > sj.length() ) {
+        for(int z = k ; z < si.length(); z++) {
+            if(si[z] > sj[0]) {
+                return true;
+            } else if (si[z] <  sj[0]){
+                return false;
+            }
+        }
+    } else {
+        for(int z = k ; z < sj.length() ;z++) {
+            if(si[0] > sj[z]) {
+                return true;
+            } else if(si[0] < sj[z]){
+                return false;
+            }
+        }
+    } */
+    return true;
+}
+string Solution::largestNumber(const vector<int> &A) {
+    // Do not write main() function.
+    // Do not read input, instead use the arguments to the function.
+    // Do not print the output, instead return values as specified
+    // Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+    // check if all all values are 0
+    bool is_0 = true;
+    for (int i = 0 ; i < A.size() ; i++) {
+        if(A[i] != 0) {
+            is_0 = false;
+            break;
+        }
+    }
+    if(is_0) return "0";
+    
+    vector <int> sortedA = A;
+    std::sort(sortedA.begin(), sortedA.end(), my_sort);
+    string A_str;
+    for (int i = 0 ; i < sortedA.size() ; i++) {
+        string val = to_string(sortedA[i]);
+        A_str += val;
+    }
+    return A_str;
+}
+
